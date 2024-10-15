@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Hacking Simulation</title>
+</head>
+<body>
+  <h1>Hacking Simulation</h1>
+  <div id="log" class="log"></div>
+  <canvas class="matrix"></canvas>
+
+  <script>
+    // Matrix effect script
+    const canvas = document.querySelector('.matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = Array(256).join("1").split("");
+    const fontSize = 20;
+    ctx.font = fontSize + "px 'Courier New'";
+
+    let draw = function () {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0F0";
+      letters.map((y_pos, index) => {
+        const text = Math.random() > 0.5 ? "1" : "0";
+        const x_pos = index * fontSize;
+        ctx.fillText(text, x_pos, y_pos);
+        letters[index] = y_pos > canvas.height + Math.random() * 1e4 ? 0 : y_pos + fontSize;
+      });
+    };
+
+    setInterval(draw, 33);
+
+    // Hacking simulation script
+    const hacking = async () => {
+      const logElement = document.getElementById('log');
+
+      const print = (message) => {
+        const timestamp = new Date().toLocaleTimeString();
+        logElement.innerHTML += `<p><span class="timestamp">[${timestamp}]</span> ${message}</p>`;
+        logElement.scrollTop = logElement.scrollHeight; // Auto-scroll to the bottom
+        console.log(message);
+      };
+
+      const steps = [
+        'Initializing the hack process...',
+        'Establishing secure connection...',
+        'Bypassing firewall...',
+        'Retrieving username credentials...',
+        'Locating IP address...',
+        'Harvesting passwords...',
+        'Compiling data packets...',
+        'Decrypting encrypted passwords...',
+        'Accessing financial databases...',
+        'Exfiltrating confidential documents...',
+        'Neutralizing security measures...',
+        'Extracting data from target device...',
+        'Hack operation complete. Terminating connection...'
+      ];
+
+      for (const step of steps) {
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
+        logElement.appendChild(loader);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        loader.remove();
+        print(step);
+      }
+    };
+
+    hacking();
+  </script>
+</body>
+</html>
